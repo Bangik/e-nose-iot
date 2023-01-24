@@ -1,19 +1,18 @@
+#include <Wire.h>                 
 #include <LiquidCrystal_I2C.h> 
 #include <SoftwareSerial.h> 
 
 LiquidCrystal_I2C lcd(0x3F, 20, 4);
 SoftwareSerial ss(2,3);
 
-// inisiasi variabel pin buzzer
-const int pinBuzzer = 3;
-
 //inisiasi variabel pin sensor
-const int pinMQ4A=1;
-const int pinMQ4D=7;
-const int pinMQ136A=2;
+const int pinMQ4A=0;
+const int pinMQ4D=6;
+const int pinMQ136A=1;
 const int pinMQ136D=4;
-const int pinMQ137A=0;
-const int pinMQ137D=8;
+const int pinMQ137A=2;
+const int pinMQ137D=7;
+const int pinBuzzerD=5;
 
 //inisiasi variabel output analog sensor
 int MQ4OutA;
@@ -35,6 +34,11 @@ float rangeMQ4 = 9700.00;
 float rangeMQ136 = 199.00;
 float rangeMQ137 = 495.00;
 
+//inisiasi ambang batas
+float tsMQ4 = 3000.00; 
+float tsMQ136 = 200.00;
+float tsMQ137 = 200.00;
+
 //inisiasi variabel awal lcd
 boolean lcdBool = true;
 
@@ -45,6 +49,7 @@ void setup() {
   pinMode(pinMQ4D, INPUT);
   pinMode(pinMQ136D, INPUT);
   pinMode(pinMQ137D, INPUT);
+  pinMode(pinBuzzerD, OUTPUT);
   
   lcd.init();
   lcd.backlight();
@@ -121,14 +126,15 @@ void loop(){
     lcd.setCursor(i,3);
     lcd.print(" ");
   }
-
-//untuk testing di serial monitor
-//  Serial.print("Data mentah MQ4: ");
-//  Serial.println(MQ4OutA);
-//  Serial.print("Tegangan MQ4: ");
-//  Serial.println(voltMQ4);
-//  Serial.print("PPM MQ4: ");
-//  Serial.println(ppmMQ4);
+  // cek ppm apakah melebihi ambang batas atau tidak 
+  if(ppmMQ4 >= tsMQ4 || ppmMQ136 >= tsMQ136 || ppmMQ137 >= tsMQ137){
+    // hidupkan buzzer jika salah satu ppm lebih dari ambang batas   
+    digitalWrite(pinBuzzerD, HIGH);
+    delay(30);
+    digitalWrite(pinBuzzerD, LOW);
+  }else{
+    digitalWrite(pinBuzzerD, LOW);
+  }
   
    delay(1000);
 }
