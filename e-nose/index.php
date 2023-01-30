@@ -12,9 +12,12 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Metana (MQ4)</th>
-                        <th>H2S (MQ136)</th>
-                        <th>Amonia (MQ137)</th>
+                        <th>Volt MQ4</th>
+                        <th>PPM Metana (MQ4)</th>
+                        <th>Volt MQ136</th>
+                        <th>PPM H2S (MQ136)</th>
+                        <th>Volt MQ137</th>
+                        <th>PPM Amonia (MQ137)</th>
                         <th>Waktu</th>
                     </tr>
                 </thead>
@@ -30,8 +33,11 @@
                     ?>
                     <tr>
                         <td><?php echo $no++; ?></td>
+                        <td><?php echo $row['vmq4']; ?></td>
                         <td><?php echo $row['mq4']; ?></td>
+                        <td><?php echo $row['vmq136']; ?></td>
                         <td><?php echo $row['mq136']; ?></td>
+                        <td><?php echo $row['vmq137']; ?></td>
                         <td><?php echo $row['mq137']; ?></td>
                         <td><?php echo $row['created_at']; ?></td>
                     </tr>

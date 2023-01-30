@@ -9,9 +9,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $mq4 = $data['mq4'];
         $mq136 = $data['mq136'];
         $mq137 = $data['mq137'];
+        $vmq4 = $data['vmq4'];
+        $vmq136 = $data['vmq136'];
+        $vmq137 = $data['vmq137'];
         $created_at = date('Y-m-d H:i:s');
 
-        $sql = "INSERT INTO mq_sensors (mq4, mq136, mq137, created_at) VALUES ('$mq4', '$mq136', '$mq137', '$created_at')";
+        $sql = "INSERT INTO mq_sensors (mq4, mq136, mq137, vmq4, vmq136, vmq137, created_at) VALUES ('$mq4', '$mq136', '$mq137', '$vmq4', '$vmq136', '$vmq137', '$created_at')";
 
         if (mysqli_query($link, $sql)) {
             http_response_code(201);
@@ -20,6 +23,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     'mq4' => $mq4,
                     'mq136' => $mq136,
                     'mq137' => $mq137,
+                    'vmq4' => $vmq4,
+                    'vmq136' => $vmq136,
+                    'vmq137' => $vmq137,
                     'created_at' => $created_at
                 ),
                 'status_message' => 'Data berhasil ditambahkan.'

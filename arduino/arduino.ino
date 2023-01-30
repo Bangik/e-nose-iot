@@ -1,4 +1,3 @@
-#include <Wire.h>                 
 #include <LiquidCrystal_I2C.h> 
 #include <SoftwareSerial.h> 
 
@@ -109,6 +108,12 @@ void loop(){
   send += ppmMQ136;
   send += ";";
   send += ppmMQ137;
+  send += ";";
+  send += voltMQ4;
+  send += ";";
+  send += voltMQ136;
+  send += ";";
+  send += voltMQ137;
 
   ss.println(send);
   
@@ -136,7 +141,7 @@ void loop(){
     digitalWrite(pinBuzzerD, LOW);
   }
   
-   delay(1000);
+   delay(10000);
 }
 //function convert dari analog ke digital/volt
 float adc(int analog){
