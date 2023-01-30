@@ -1,9 +1,9 @@
 <?php
 
 $host     = 'localhost';
-$user     = 'aldifirm_e-nose';
-$password = 'e-nose-lala';
-$db       = 'aldifirm_e-nose';
+$user     = '';
+$password = '';
+$db       = '';
 
 
 $link = mysqli_connect($host, $user, $password, $db);

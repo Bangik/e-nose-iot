@@ -1,15 +1,15 @@
 #define BLYNK_PRINT Serial
-#define BLYNK_TEMPLATE_ID "TMPLoqVVYVDV"
-#define BLYNK_DEVICE_NAME "esp arduino2"
-#define BLYNK_AUTH_TOKEN "QpkRo2AATmP6Fj2btaTQkskDVLA0Yhw_"
+#define BLYNK_TEMPLATE_ID ""
+#define BLYNK_DEVICE_NAME ""
+#define BLYNK_AUTH_TOKEN ""
 
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
 #include <WiFiClientSecureBearSSL.h>
 #include <BlynkSimpleEsp8266.h>
 
-char ssid[] = "Murni Fotocopy";
-char pass[] = "Sudahdiganti7";
+char ssid[] = "";
+char pass[] = "";
 char auth[] = BLYNK_AUTH_TOKEN;
 BlynkTimer timer;
 const char* fingerprint = "D8 F3 33 1C 03 51 B8 09 14 20 E0 84 4F B3 69 3F 41 D1 EA 1C";
@@ -17,11 +17,14 @@ const char* fingerprint = "D8 F3 33 1C 03 51 B8 09 14 20 E0 84 4F B3 69 3F 41 D1
 double MQ4;
 double MQ136;
 double MQ137;
+double VMQ4;
+double VMQ136;
+double VMQ137;
 
 void setup() {
   Serial.begin(115200);
   Blynk.begin(auth, ssid, pass);
-  timer.setInterval(1000L, myTimer);
+  timer.setInterval(10000L, myTimer);
 }
 
 String splitString(String data, char separator, int index)
@@ -42,8 +45,8 @@ String splitString(String data, char separator, int index)
 
 void kirimDataKeServer(){
   std::unique_ptr<BearSSL::WiFiClientSecure> client(new BearSSL::WiFiClientSecure);
-  client->setFingerprint(fingerprint);
-  // client->setInsecure();
+  // client->setFingerprint(fingerprint);
+  client->setInsecure();
   HTTPClient https;
 
   String postData;
@@ -54,6 +57,12 @@ void kirimDataKeServer(){
   postData += MQ136;
   postData += ",\"mq137\": ";
   postData += MQ137;
+  postData += ",\"vmq4\": ";
+  postData += VMQ4;
+  postData += ",\"vmq136\": ";
+  postData += VMQ136;
+  postData += ",\"vmq137\": ";
+  postData += VMQ137;
   postData += "}";
   
   https.begin(*client, "https://e-nose.bangik.live/insert.php");
@@ -92,6 +101,9 @@ void loop() {
     MQ4 = splitString(msg, ';', 0).toDouble();
     MQ136 = splitString(msg, ';', 1).toDouble();
     MQ137 = splitString(msg, ';', 2).toDouble();
+    VMQ4 = splitString(msg, ';', 3).toDouble();
+    VMQ136 = splitString(msg, ';', 4).toDouble();
+    VMQ137 = splitString(msg, ';', 5).toDouble();
   }
 
   Blynk.run(); 
