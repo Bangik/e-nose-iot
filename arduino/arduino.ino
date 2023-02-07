@@ -117,28 +117,38 @@ void loop(){
 
   ss.println(send);
   
-  //print ke lcd
-  lcd.setCursor(0,0);
-  lcd.print("PPM MQ4: " + skorMQ4);
+  if(ss.available()){
+    String msg = "";
+    while(Serial.available()){
+      msg += char(Serial.read());
+      delay(1);
+    }
+    
+    if(msg.toInt() > 0){
+      //print ke lcd
+      lcd.setCursor(0,0);
+      lcd.print("PPM MQ4: " + skorMQ4);
 
-  lcd.setCursor(0,1);
-  lcd.print("PPM MQ136: " + skorMQ136);
-  
-  lcd.setCursor(0,2);
-  lcd.print("PPM MQ137: " + skorMQ137);
+      lcd.setCursor(0,1);
+      lcd.print("PPM MQ136: " + skorMQ136);
 
-  for(int i = 0; i < 20; i++){
-    lcd.setCursor(i,3);
-    lcd.print(" ");
-  }
-  // cek ppm apakah melebihi ambang batas atau tidak 
-  if(ppmMQ4 >= tsMQ4 || ppmMQ136 >= tsMQ136 || ppmMQ137 >= tsMQ137){
-    // hidupkan buzzer jika salah satu ppm lebih dari ambang batas   
-    digitalWrite(pinBuzzerD, HIGH);
-    delay(30);
-    digitalWrite(pinBuzzerD, LOW);
-  }else{
-    digitalWrite(pinBuzzerD, LOW);
+      lcd.setCursor(0,2);
+      lcd.print("PPM MQ137: " + skorMQ137);
+
+      for(int i = 0; i < 20; i++){
+        lcd.setCursor(i,3);
+        lcd.print(" ");
+      }
+      // cek ppm apakah melebihi ambang batas atau tidak 
+      if(ppmMQ4 >= tsMQ4 || ppmMQ136 >= tsMQ136 || ppmMQ137 >= tsMQ137){
+        // hidupkan buzzer jika salah satu ppm lebih dari ambang batas   
+        digitalWrite(pinBuzzerD, HIGH);
+        delay(30);
+        digitalWrite(pinBuzzerD, LOW);
+      }else{
+        digitalWrite(pinBuzzerD, LOW);
+      }
+    }
   }
   
    delay(10000);
