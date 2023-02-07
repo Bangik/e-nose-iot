@@ -74,10 +74,10 @@ void kirimDataKeServer(){
   }
   const String& payload = https.getString();    //Get the response payload
   
-  Serial.print("https code : ");
+//   Serial.print("https code : ");
   Serial.println(httpCode);   //Print HTTP return code
-  Serial.println("payload : " + payload);    //Print request response payload
-  Serial.println("post data " + postData);
+//   Serial.println("payload : " + payload);    //Print request response payload
+//   Serial.println("post data " + postData);
       
   https.end();
 }
